@@ -10,21 +10,29 @@ describe('UserController', () => {
   let userController: UserController;
   let userService: UserService;
 
-  beforeEach(() => {
+  beforeAll(() => {
     userService = new UserService();
     userController = new UserController(userService);
   });
 
-  it('should return created user', async () => {
-    const userToCreate: ICreateUser = {
-      age: Number(faker.random.numeric(2)),
-      class: ClassUserEnum.COMMON,
-      email: faker.internet.email(),
-      name: faker.name.fullName(),
-    };
+  const userToCreate: ICreateUser = {
+    age: Number(faker.random.numeric(2)),
+    class: ClassUserEnum.COMMON,
+    email: faker.internet.email(),
+    name: faker.name.fullName(),
+  };
 
+  it('should created user', async () => {
     const user = await userController.create(userToCreate);
 
     expect(user).toEqual({ ...userToCreate, id: user.id });
+  });
+
+  it('should return user created', async () => {
+    const user = await userController.create(userToCreate);
+
+    const userFound = await userController.getUser(user.id);
+
+    expect(user.id).toEqual(userFound.id);
   });
 });
