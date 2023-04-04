@@ -35,4 +35,11 @@ describe('UserController', () => {
 
     expect(user.id).toEqual(userFound.id);
   });
+
+  it('should return an error when not finding the user', () => {
+    const userId = 'non-existent-id';
+    const tryFindUser = async () => await userController.getUser(userId);
+
+    expect(tryFindUser).rejects.toThrow(Error('User not found'));
+  });
 });
