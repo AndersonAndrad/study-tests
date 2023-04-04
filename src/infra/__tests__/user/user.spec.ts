@@ -4,6 +4,7 @@ import {
   ICreateUser,
 } from '../../interfaces/user/createUser.interface';
 import { UserService } from '../../../app/user/user.service';
+import { faker } from '@faker-js/faker';
 
 describe('UserController', () => {
   let userController: UserController;
@@ -16,10 +17,10 @@ describe('UserController', () => {
 
   it('should return created user', async () => {
     const userToCreate: ICreateUser = {
-      age: 18,
+      age: Number(faker.random.numeric(2)),
       class: ClassUserEnum.COMMON,
-      email: 'user@email.com',
-      name: 'user-name',
+      email: faker.internet.email(),
+      name: faker.name.fullName(),
     };
 
     const user = await userController.create(userToCreate);
