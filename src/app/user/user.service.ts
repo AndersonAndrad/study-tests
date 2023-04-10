@@ -1,34 +1,27 @@
-import { Injectable } from "@nestjs/common";
-import {
-  ICreateUser,
-  IUser
-} from "../../infra/interfaces/user/createUser.interface";
-import { HashHelper } from "../../infra/helper/hash.helper";
+import { Inject, Injectable } from '@nestjs/common';
+import { ICreateUser } from '../../infra/interfaces/user/createUser.interface';
+import { IUserRepository, USER_REPOSITORY } from './user.repository';
 
 @Injectable()
 export class UserService {
-  private users: IUser[] = [];
+  constructor(
+    @Inject(USER_REPOSITORY)
+    private userRepository: IUserRepository,
+  ) {}
 
-  async create(createUser: ICreateUser) {
-    const createdUser: IUser = {
-      ...createUser,
-      id: HashHelper.base64()
-    };
-
-    this.users.push(createdUser);
-
-    return createdUser;
+  create(createUser: ICreateUser) {
+    return this.userRepository.create(createUser);
   }
 
-  async getUser(userId: string) {
-    const user = this.users.find((user) => user.id === userId);
-
-    if (!user) throw new Error("User not found");
-
-    return user;
+  getUser(userId: string) {
+    return this.userRepository.getUser(userId);
   }
 
-  async getUsers() {
-    return this.users;
+  getUsers() {
+    return this.userRepository.getUsers();
+  }
+
+  delete(userId: string) {
+    this.userRepository.delete(userId);
   }
 }

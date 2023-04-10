@@ -3,10 +3,12 @@ export interface IUser {
   email: string;
   name: string;
   age: number;
-  class: ClassUserEnum;
+  userClass: ClassUserEnum;
 }
 
 export type ICreateUser = Omit<IUser, 'id'>;
+
+export type IUpdateUser = Partial<ICreateUser>;
 
 export enum ClassUserEnum {
   ADMIN = 'admin',

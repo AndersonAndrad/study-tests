@@ -1,5 +1,6 @@
 import {
   ICreateUser,
+  IUpdateUser,
   IUser,
 } from '../../infra/interfaces/user/createUser.interface';
 
@@ -11,4 +12,8 @@ export interface IUserRepository {
   getUser(userId: string): Promise<IUser>;
 
   getUsers(): Promise<IUser[]>;
+
+  delete(userId: string): Promise<void>;
+
+  update(userId: string, userUpdate: IUpdateUser): Promise<IUser>;
 }
