@@ -9,4 +9,6 @@ export interface IUserRepository {
   create(createUser: ICreateUser): Promise<IUser>;
 
   getUser(userId: string): Promise<IUser>;
+
+  getUsers(): Promise<IUser[]>;
 }

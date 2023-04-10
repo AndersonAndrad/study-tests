@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 import {
   ICreateUser,
-  IUser,
-} from '../../infra/interfaces/user/createUser.interface';
-import { HashHelper } from '../../infra/helper/hash.helper';
+  IUser
+} from "../../infra/interfaces/user/createUser.interface";
+import { HashHelper } from "../../infra/helper/hash.helper";
 
 @Injectable()
 export class UserService {
@@ -12,7 +12,7 @@ export class UserService {
   async create(createUser: ICreateUser) {
     const createdUser: IUser = {
       ...createUser,
-      id: HashHelper.base64(),
+      id: HashHelper.base64()
     };
 
     this.users.push(createdUser);
@@ -23,8 +23,12 @@ export class UserService {
   async getUser(userId: string) {
     const user = this.users.find((user) => user.id === userId);
 
-    if (!user) throw new Error('User not found');
+    if (!user) throw new Error("User not found");
 
     return user;
+  }
+
+  async getUsers() {
+    return this.users;
   }
 }

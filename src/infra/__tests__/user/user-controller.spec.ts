@@ -42,4 +42,12 @@ describe('UserController', () => {
 
     expect(tryFindUser).rejects.toThrow(Error('User not found'));
   });
+
+  it('should return all users', async () => {
+    await userController.create(userToCreate);
+
+    const users = await userController.getUsers();
+
+    expect(users).toHaveLength(users.length)
+  })
 });
